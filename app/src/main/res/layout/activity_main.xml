@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="shashank.com.customrefresh.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <ProgressBar
+            android:id="@+id/progressBarLeft"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="5dp"
+            android:rotation="180"
+            android:maxHeight="5dp"
+            android:indeterminate="true"
+            android:max="400"
+            android:indeterminateBehavior="cycle"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBarRight"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:minHeight="5dp"
+            android:maxHeight="5dp"
+            android:indeterminateDrawable="@drawable/progressbar_custom"
+            android:max="400"
+            />
+        
+    </LinearLayout>
+
+    <shashank.com.customrefresh.RefreshLayout
+        android:id="@+id/main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#ffffff"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Random text"
+            android:gravity="center"
+            />
+
+    </shashank.com.customrefresh.RefreshLayout>
+
+</FrameLayout>
