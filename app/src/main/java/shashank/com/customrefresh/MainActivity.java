@@ -4,12 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
-
+public class MainActivity extends AppCompatActivity implements RefreshLayout.Refresh{
     private RefreshLayout mainLayout;
-    private ProgressBar progressBarLeft;
-    private ProgressBar progressBarRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,15 +13,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mainLayout = (RefreshLayout) findViewById(R.id.main_layout);
-        progressBarLeft = (ProgressBar) findViewById(R.id.progressBarLeft);
-        progressBarRight = (ProgressBar) findViewById(R.id.progressBarRight);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        mainLayout.registerRefreshLayout(mainLayout, progressBarLeft, progressBarRight);
+        mainLayout.registerRefreshLayout(mainLayout, progressBar);
+        mainLayout.setOnRefreshListener(this);
     }
 
     @Override
     protected void onDestroy() {
         mainLayout.deRegisterRefreshLayout();
         super.onDestroy();
+    }
+
+    @Override
+    public void onRefresh() {
+
     }
 }
