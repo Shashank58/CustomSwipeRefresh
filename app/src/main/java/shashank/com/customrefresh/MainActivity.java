@@ -15,8 +15,7 @@ public class MainActivity extends AppCompatActivity implements RefreshLayout.Ref
         mainLayout = (RefreshLayout) findViewById(R.id.main_layout);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        mainLayout.registerRefreshLayout(mainLayout, progressBar);
-        mainLayout.setOnRefreshListener(this);
+        mainLayout.registerRefreshLayout(mainLayout, progressBar, this);
     }
 
     @Override
@@ -27,6 +26,6 @@ public class MainActivity extends AppCompatActivity implements RefreshLayout.Ref
 
     @Override
     public void onRefresh() {
-
+        
     }
 }

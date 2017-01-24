@@ -16,14 +16,19 @@ import android.widget.ProgressBar;
 /**
  * Created by shashankm on 12/01/17.
  */
-
 public class RefreshLayout extends FrameLayout implements View.OnTouchListener {
-    private static final String TAG = RefreshLayout.class.getSimpleName();
     private static final Interpolator LARGE_OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(10f);
     private static final Interpolator SMALL_OVERSHOOT_INTERPOLATOR = new OvershootInterpolator(1f);
 
-    private static int screenHeight;
+    /**
+     * Point till which the user can pull content in pixels.
+     */
     private static int breakPoint;
+
+    /**
+     * Point after which pulling of content slows down to give a natural experience of
+     * stopping instead of stopping the pull abruptly.
+     */
     private static int slowPoint;
 
     private float initialTouchPos;
@@ -73,6 +78,7 @@ public class RefreshLayout extends FrameLayout implements View.OnTouchListener {
                 }
 
                 if (y < breakPoint) {
+                    //Slow down pull
                     float slowedY = slowPoint + ((y - slowPoint) / 2);
                     content.setTranslationY(slowedY);
                     progressBar.setTranslationY(slowedY);
@@ -98,40 +104,64 @@ public class RefreshLayout extends FrameLayout implements View.OnTouchListener {
                     return true;
                 }
 
-                content.animate().y(0).setDuration(200).start();
-                progressBar.animate().y(0).setDuration(200).start();
+                initialPosition();
                 return true;
         }
         return true;
     }
 
-    public void registerRefreshLayout(View content, ProgressBar progressBar) {
+    /**
+     * Register pull to refresh listener.
+     * @param content the parent view which contains related content.
+     * @param progressBar present in root frame layout.
+     * @param refreshListener callback listener to communicate when content should be refreshed.
+     */
+    public void registerRefreshLayout(View content, ProgressBar progressBar, Refresh refreshListener) {
         this.progressBar = progressBar;
         this.content = content;
         this.progressBar.setMax(breakPoint);
-    }
-
-    public void setOnRefreshListener(Refresh refreshListener) {
         this.refreshListener = refreshListener;
+        setOnTouchListener(this);
     }
 
+    /**
+     * To be called onDestroy or related events to prevent memory leak.
+     */
     public void deRegisterRefreshLayout() {
         progressBar = null;
         content = null;
         refreshListener = null;
     }
 
+    /**
+     * Stop refreshing when a terminating event from your refresh is received.
+     */
+    public void stopRefreshing() {
+        if (null != progressBar && null != content) {
+            progressBar.setIndeterminate(false);
+            initialPosition();
+        }
+    }
+
     private void init() {
-        setOnTouchListener(this);
-        if (screenHeight == 0 || breakPoint == 0 || slowPoint == 0) {
+        int screenHeight;
+        if (breakPoint == 0 || slowPoint == 0) {
             DisplayMetrics displaymetrics = new DisplayMetrics();
             ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             screenHeight = displaymetrics.heightPixels;
+
+            //Content pull able till one fifth of screen
             breakPoint = screenHeight / 5;
+
+            //Slow point is one seventh of screen
             slowPoint = screenHeight / 7;
         }
     }
 
+    /**
+     * Refresh content by animating progressbar and content bar to slow point and calling onRefresh
+     * if registered.
+     */
     private void animateBackContentAndRefresh() {
         progressBar.setIndeterminate(true);
         content.animate().y(slowPoint)
@@ -141,5 +171,13 @@ public class RefreshLayout extends FrameLayout implements View.OnTouchListener {
                 .setInterpolator(SMALL_OVERSHOOT_INTERPOLATOR)
                 .setDuration(200).setListener(null).start();
         if (refreshListener != null) refreshListener.onRefresh();
+    }
+
+    /**
+     * Animate progressbar and content back to initial position.
+     */
+    private void initialPosition() {
+        content.animate().y(0).setDuration(200).start();
+        progressBar.animate().y(0).setDuration(200).start();
     }
 }
