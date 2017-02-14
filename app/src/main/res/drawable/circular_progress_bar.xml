@@ -4,7 +4,7 @@
     android:toDegrees="270">
     <shape
         android:shape="ring"
-        android:thickness="1.5dp"
+        android:thickness="2.5dp"
         android:useLevel="true"><!-- this line fixes the issue for lollipop api 21 -->
 
         <gradient

@@ -2,9 +2,10 @@ package shashank.com.customrefresh;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ProgressBar;
 
-public class MainActivity extends AppCompatActivity implements RefreshLayout.Refresh {
+public class MainActivity extends AppCompatActivity implements RefreshLayout.Refresh, View.OnClickListener {
     private RefreshLayout mainLayout;
 
     @Override
@@ -15,6 +16,9 @@ public class MainActivity extends AppCompatActivity implements RefreshLayout.Ref
         mainLayout = (RefreshLayout) findViewById(R.id.main_layout);
         ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
+        View random = findViewById(R.id.random);
+
+        random.setOnClickListener(this);
         mainLayout.registerRefreshLayout(mainLayout, progressBar, this);
     }
 
@@ -26,6 +30,13 @@ public class MainActivity extends AppCompatActivity implements RefreshLayout.Ref
 
     @Override
     public void onRefresh() {
-        mainLayout.stopRefreshing();
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.random) {
+            mainLayout.stopRefreshing();
+        }
     }
 }
