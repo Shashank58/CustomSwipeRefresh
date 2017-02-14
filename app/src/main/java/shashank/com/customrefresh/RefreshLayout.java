@@ -57,7 +57,7 @@ public class RefreshLayout extends FrameLayout implements View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        if (progressBar == null || content == null) return true;
+        if (progressBar == null || content == null || progressBar.isIndeterminate()) return true;
 
         final int action = event.getActionMasked();
         switch (action) {
@@ -177,7 +177,7 @@ public class RefreshLayout extends FrameLayout implements View.OnTouchListener {
      * Animate progressbar and content back to initial position.
      */
     private void initialPosition() {
-        content.animate().y(0).setDuration(200).start();
-        progressBar.animate().y(0).setDuration(200).start();
+        content.animate().y(0).setDuration(250).start();
+        progressBar.animate().y(0).setDuration(250).start();
     }
 }
