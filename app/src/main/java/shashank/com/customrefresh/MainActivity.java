@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ProgressBar;
 
-public class MainActivity extends AppCompatActivity implements RefreshLayout.Refresh{
+public class MainActivity extends AppCompatActivity implements RefreshLayout.Refresh {
     private RefreshLayout mainLayout;
 
     @Override
@@ -26,6 +26,6 @@ public class MainActivity extends AppCompatActivity implements RefreshLayout.Ref
 
     @Override
     public void onRefresh() {
-        
+        mainLayout.stopRefreshing();
     }
 }
