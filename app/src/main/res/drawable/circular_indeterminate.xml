@@ -4,14 +4,14 @@
     android:toDegrees="360">
     <shape
         android:shape="ring"
-        android:thickness="2.5dp"
+        android:thickness="1dp"
         android:useLevel="false">
 
         <gradient
             android:type="sweep"
-            android:startColor="#11a7c3"
-            android:centerColor="#11a7c3"
-            android:endColor="@android:color/transparent"
+            android:startColor="#9E9E9E"
+            android:centerColor="#E0E0E0"
+            android:endColor="#E0E0E0"
             />
 
     </shape>

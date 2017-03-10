@@ -167,7 +167,7 @@ public class RefreshLayout extends FrameLayout implements View.OnTouchListener {
         content.animate().y(slowPoint)
                 .setInterpolator(SMALL_OVERSHOOT_INTERPOLATOR)
                 .setDuration(200).setListener(null).start();
-        progressBar.animate().y(breakPoint - slowPoint)
+        progressBar.animate().y((breakPoint - slowPoint) - 25)
                 .setInterpolator(SMALL_OVERSHOOT_INTERPOLATOR)
                 .setDuration(200).setListener(null).start();
         if (refreshListener != null) refreshListener.onRefresh();

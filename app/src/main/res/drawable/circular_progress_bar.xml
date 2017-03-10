@@ -4,13 +4,13 @@
     android:toDegrees="270">
     <shape
         android:shape="ring"
-        android:thickness="2.5dp"
+        android:thickness="1dp"
         android:useLevel="true"><!-- this line fixes the issue for lollipop api 21 -->
 
         <gradient
             android:angle="0"
-            android:endColor="#11a7c3"
-            android:startColor="#11a7c3"
+            android:endColor="#9E9E9E"
+            android:startColor="#9E9E9E"
             android:type="sweep"
             android:useLevel="false" />
     </shape>
